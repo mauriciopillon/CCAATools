@@ -54,15 +54,20 @@ tabpesos <- c  ( 100,	87.5,	75,	62.5,	50,	37.5,	25,	12.5,	0,
 # P.A1, E.A1, P.A2, E.A2, P.A3, E.A3, P.A4, E.A4, P.B1, E.B1, P.B2, E.B2, P.B3, E.B3, P.B4, E.B4, P.NC, E.NC
 vpriori <- c (1,10, 2,11, 3,12, 4,13, 5,14, 6,15, 7,16, 8,17, 9,18)
 
+profnames <- c ("Antonio", "Beatriz", "Caroline", "Danubia",
+                "Edicleuza", "Fábio", "Gabriel", "Henrique",
+                "Isolde", "Joaquim", "Larissa", "Norma", "Marta",
+                "Oswaldo", "Pedro")
+
 # profnames <- c ("Adriano", "André", "Avanilde", "Carla",
 #                 "Charles", "Cristiano", "Fabiano", "Guilherme",
 #                 "Isabela", "Janine", "Marcelo", "Maurício", "Parpinelli",
 #                 "Obelheiro", "Rosso")
 
-profnames <- c ("A", "C", "B", "V",
-                "W", "I", "F", "K",
-                "M", "Q", "V", "X", "D",
-                "H", "P")
+# profnames <- c ("A", "C", "B", "V",
+#                 "W", "I", "F", "K",
+#                 "M", "Q", "V", "X", "D",
+#                 "H", "P")
 
 
 # cores dos professores

@@ -60,11 +60,16 @@ vpriori <- c (1,9,2,10,3,11,4,12,5,13,6,14,7,15,8,16)
 #                 "Isabela", "Janine", "Marcelo", "Maurício", "Parpinelli",
 #                 "Obelheiro", "Rosso")
 
-profnames <- c ("A", "C", "B", "V",
-                "W", "I", "F", "K",
-                "M", "Q", "V", "X", "D",
-                "H", "P")
+# profnames <- c ("A", "C", "B", "V",
+#                 "W", "I", "F", "K",
+#                 "M", "Q", "V", "X", "D",
+#                 "H", "P")
 
+
+profnames <- c ("Antonio", "Beatriz", "Caroline", "Danubia",
+                "Edicleuza", "Fábio", "Gabriel", "Henrique",
+                "Isolde", "Joaquim", "Larissa", "Norma", "Marta",
+                "Oswaldo", "Pedro")
 
 cor <- c(brewer.pal(n = 10, name = "Set3"),brewer.pal(n = length(profnames)-10, name = "Spectral"))
 
