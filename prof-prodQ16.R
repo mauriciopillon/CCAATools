@@ -31,6 +31,7 @@ library(RColorBrewer)
 source ("mcalibQ16.R")
 
 planilha <- "jcr/Produção Individual 2020-teste.xlsx"
+#planilha <- "../PD_21_09_2020.xlsx"
 
 mysheets <- excel_sheets(planilha)
 p2020 <- read_excel(planilha, sheet="2020")
@@ -59,6 +60,11 @@ vpriori <- c (1,9,2,10,3,11,4,12,5,13,6,14,7,15,8,16)
 #                 "Charles", "Cristiano", "Fabiano", "Guilherme",
 #                 "Isabela", "Janine", "Marcelo", "Maurício", "Parpinelli",
 #                 "Obelheiro", "Rosso")
+
+pd2016_2019 <- c (1682.5, 450, 443.75, 403.75, 
+                  1702.5, 210, 395, 2168.75,
+                  2696.25, 580, 2097.5, 1697.5, 1730,
+                  550, 352.5)
 
 # profnames <- c ("A", "C", "B", "V",
 #                 "W", "I", "F", "K",
@@ -129,6 +135,8 @@ par(mfrow = c(1,1))
 contabiliza(allprod)
 vtall <- ret
 tpall <- vtall[order(as.numeric(vtall[,2])),]
+nvtall <- data.frame (vtall,pd2016_2019, (100-(as.numeric(vtall[,2])*100/as.numeric(pd2016_2019)))*(-1))
+nvtall[order(as.numeric(nvtall[,4])),1:5]
 
 bp <- barplot2(as.numeric(vtall[order(as.numeric(vtall[,2])),2]),
                beside = TRUE, horiz = FALSE,
@@ -141,7 +149,10 @@ text(bp-0.5,-75, vtall[order(as.numeric(vtall[,2])),1],cex=1,pos=1, xpd=TRUE, sr
 text(2,-250, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.15,50+(as.numeric(vtall[order(as.numeric(vtall[,2])),2])/2),
      vtall[order(as.numeric(vtall[,2])),2],cex=1.4,pos=1, xpd=TRUE, srt=90)
-abline(h=120, col = "blue")
+text(bp-0.15,200+(as.numeric(vtall[order(as.numeric(vtall[,2])),2])),
+     sprintf ("%.f%%*", nvtall[order(as.numeric(vtall[,2])),5]),cex=1,pos=1, xpd=TRUE, srt=40)
+text(14,-260, c("* Valores % correspondentes a variação em relação ao período (2016-2019).") ,cex=0.8,pos=1, xpd=TRUE)
+#abline(h=120, col = "blue")
 
 
 ##############
@@ -162,7 +173,7 @@ text(bp-0.5,-15, ttcapes[order(as.numeric(ttcapes[,2])),1],cex=1,pos=1, xpd=TRUE
 text(2,-50, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.15,50+(as.numeric(ttcapes[order(as.numeric(ttcapes[,2])),2])/2), 
       ttcapes[order(as.numeric(ttcapes[,2])),2],cex=1.4,pos=1, xpd=TRUE, srt=90)
-abline(h=120, col = "blue")
+#abline(h=120, col = "blue")
 
 
 ##############
@@ -182,7 +193,7 @@ text(2,-50, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.5,-15, vtprofpt5[order(as.numeric(vtprofpt5[,2])),1],cex=1,pos=1, xpd=TRUE, srt=45)
 text(bp-0.15,50+(as.numeric(vtprofpt5[order(as.numeric(vtprofpt5[,2])),2])/2), 
      vtprofpt5[order(as.numeric(vtprofpt5[,2])),2],cex=1.4,pos=1, xpd=TRUE, srt=90)
-abline(h=120, col = "blue")
+#abline(h=120, col = "blue")
 
 ##############
 contabiliza(top10)
@@ -199,7 +210,7 @@ text(2,-90, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.5,-30, vtprofpt10[order(as.numeric(vtprofpt10[,2])),1],cex=1,pos=1, xpd=TRUE, srt=45)
 text(bp-0.15,50+(as.numeric(vtprofpt10[order(as.numeric(vtprofpt10[,2])),2])/2), 
      vtprofpt10[order(as.numeric(vtprofpt10[,2])),2],cex=1.4,pos=1, xpd=TRUE, srt=90)
-abline(h=120, col = "blue")
+#abline(h=120, col = "blue")
 
 ##############
 
@@ -218,7 +229,7 @@ text(2,-200, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.5,-60, vtpub3par1[order(as.numeric(vtpub3par1[,2])),1],cex=1,pos=1, xpd=TRUE, srt=45)
 text(bp-0.15,50+(as.numeric(vtpub3par1[order(as.numeric(vtpub3par1[,2])),2])/2), 
      vtpub3par1[order(as.numeric(vtpub3par1[,2])),2],cex=1.4,pos=1, xpd=TRUE, srt=90)
-abline(h=120, col = "blue")
+#abline(h=120, col = "blue")
 
 mediaProd <- c()
 fmedias(15, vcapes)
@@ -273,7 +284,7 @@ legend("bottomright", c("Pq1x3", "Top5", "Top10", "TopCapes"), col = color, pch=
 #axis(1, at=sort (c(rep(1:16)), decreasing = TRUE),labels=c(rep(0:15)), las=1)
 axis(1, at=sort (c(rep(1:16))),labels=c(rep(0:15)), las=1)
 text(2,-1.2, planilha,cex=1,pos=1, xpd=TRUE)
-abline(v=9, col = "blue")
+#abline(v=9, col = "blue")
 
 ##########################
 
@@ -287,8 +298,8 @@ title("Medianas Top5, Top10, Pq1x3 & Bottom (1-15)")
 legend("bottomright", c("Pq1x3", "Top5", "Top10", "TopCapes"), col = color, pch=plotchar, lty=linetype)
 axis(1, at=sort (c(rep(1:16))),labels=c(rep(0:15)), las=1)
 text(2,-1.2, planilha,cex=1,pos=1, xpd=TRUE)
-abline(v=3, col = "blue")
-abline(v=5, col = "blue")
+#abline(v=3, col = "blue")
+#abline(v=5, col = "blue")
 
 ##########################
 ####################################################################
