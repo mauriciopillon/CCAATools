@@ -152,6 +152,8 @@ text(bp-0.15,50+(as.numeric(vtall[order(as.numeric(vtall[,2])),2])/2),
 text(bp-0.15,200+(as.numeric(vtall[order(as.numeric(vtall[,2])),2])),
      sprintf ("%.f%%*", nvtall[order(as.numeric(vtall[,2])),5]),cex=1,pos=1, xpd=TRUE, srt=40)
 text(14,-260, c("* Valores % correspondentes a variação em relação ao período (2016-2019).") ,cex=0.8,pos=1, xpd=TRUE)
+text(9,-340, sprintf ("A produção 2017-2020 do PPGCA teve %.f%% em relação ao período (2016-2019).", (100-sum(as.numeric(vtall[,2]))*100/sum(pd2016_2019))*(-1)) ,cex=0.8,pos=1, xpd=TRUE)
+
 #abline(h=120, col = "blue")
 
 
