@@ -1,4 +1,18 @@
-### CCAA: Comissão de Credenciamento/Des/Re Acompanhamento e Autoavaliação 
+### CCAA2021: Comissão de Credenciamento/Des/Re Acompanhamento e Autoavaliação 
+### Coordenação PPGCA:
+###      Charles Christian Miers
+### Comissão:
+###      Avanilde Kemczinski
+###      Adriano Fiorese
+###      Isabela Gasparini
+###      Maurício Pillon
+###
+### Alterações 2021:
+###    - Número de professores na base de cálculo (14);
+###    - Adequação ao formato da nova planilha de entrada PPGCAP-ProducaoDocente_teste-2021.xls
+
+
+### CCAA2020: Comissão de Credenciamento/Des/Re Acompanhamento e Autoavaliação 
 ### Coordenação PPGCA:
 ###      Guilherme Koslovski
 ### Comissão:
