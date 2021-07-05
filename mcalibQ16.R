@@ -39,18 +39,20 @@ top <- function (topnro, prod, nprof, prioridade) {
   ctprod <<- 0
   profSum <- c()
   
+  #print ("DEB top 1")
   #print (prod)
   print (profnames [nprof])
-  for (sumii in 1:16) {
+  #print ("DEB top 2")
+  for (sumii in 1:16) {  # 
     profSum <- c (profSum, sum(as.numeric(prod[sumii,])))
-    # print (profSum[sumii])
+    #print (profSum[sumii])
   }
   profSum <- c (profSum, cor[nprof])
   allprodprof <- profSum
   
   print ("Produção Total:")
   print ("%%%%%%%%%%%%%%%%%%%%")
-  # print (topnro)
+  #print (topnro)
   print (allprodprof)
   
   for (tii in prioridade) {
@@ -58,23 +60,23 @@ top <- function (topnro, prod, nprof, prioridade) {
       profSum[tii] <- 0
     } else {
       if (as.numeric(profSum[tii]) > 0) {
-        #print (sprintf("%s %s (%s)", profnames [nprof], p2017$Qualis[tii], profSum[tii]))
+        #print (sprintf("%s %s (%s)", profnames [nprof], p20_1$Qualis[tii], profSum[tii]))
         ctprod <<- as.numeric(profSum[tii]) + ctprod
         #print (sprintf("%s (%d) %d: (Nao sou zero)", top5prod[nprof,1], tii, ctprod))
         if (ctprod > (topnro - 1)) {
           temp <- ctprod - topnro
           #print (sprintf("%s ind(%d) %d %d", profSum[tii], (topnro - 1), ctprod, temp))
           profSum[tii] <- as.numeric(profSum[tii]) - temp
-          print (sprintf("%s %s (%s)", profnames [nprof], p2017$Qualis[tii], profSum[tii]))
+          #print (sprintf("%s %s (%s)", profnames [nprof], p20_1$Qualis[tii], profSum[tii]))
         }
       }
     }
   }
-  # print ("## DEB 3 ###")
-  # profSum[18] <- cor[nprof]
-  # print (profSum)
+   #print ("## DEB 3 ###")
+   profSum[17] <- cor[nprof]
+   #print (profSum)
   
-  # print (sprintf("%s (Produção total): ",profnames [nprof], profSum))
+   #print (sprintf("%s (Produção total): ",profnames [nprof], profSum))
   
   topprod[nprof,] <<- c(profnames [nprof], profSum)
   #topprod[nprof,] <<- c(cor [nprof], profSum)
@@ -82,26 +84,27 @@ top <- function (topnro, prod, nprof, prioridade) {
   #print (allprodprof[nprof])
   print ("Produção Top:")
   print (profSum)
+  #print ("DEB 3.5")
 }
 
 topcapes <- function () {
-  for (tprof in 4:18) {
-    trienio <<- data.frame(p2020[1:16,tprof])
+  for (tprof in 4:(length(profnames)+3)) {
+    trienio <<- data.frame(p20_4[1:16,tprof])
     top(1,trienio,(tprof - 3),vpriori)
   }
   tmpcapes1 <- topprod
-  for (tprof in 4:18) {
-    trienio <<- data.frame(p2017[1:16,tprof])
+  for (tprof in 4:(length(profnames)+3)) {
+    trienio <<- data.frame(p20_3[1:16,tprof])
     top(1,trienio,(tprof - 3),vpriori)
   }
   tmpcapes2 <- topprod
-  for (tprof in 4:18) {
-    trienio <<- data.frame(p2018[1:16,tprof])
+  for (tprof in 4:(length(profnames)+3)) {
+    trienio <<- data.frame(p20_2[1:16,tprof])
     top(1,trienio,(tprof - 3),vpriori)
   }
   tmpcapes3 <- topprod
-  for (tprof in 4:18) {
-    trienio <<- data.frame(p2019[1:16,tprof])
+  for (tprof in 4:(length(profnames)+3)) {
+    trienio <<- data.frame(p20_1[1:16,tprof])
     top(1,trienio,(tprof - 3),vpriori)
   }
   tmpcapes4 <- topprod
@@ -120,18 +123,18 @@ topcapes <- function () {
 
 
 extrairtop <- function (topnro) {
-  for (tprof in 4:18) {
-    trienio <<- data.frame(p2017[1:16,tprof],
-                           p2018[1:16,tprof],
-                           p2019[1:16,tprof],
-                           p2020[1:16,tprof])
+  for (tprof in 4:(length(profnames)+3)) {
+    trienio <<- data.frame(p20_1[1:16,tprof],
+                           p20_2[1:16,tprof],
+                           p20_3[1:16,tprof],
+                           p20_4[1:16,tprof])
     top(topnro,trienio,(tprof - 3),vpriori)
   }
 }
 
 contabiliza <- function (producao) {
-  ret <<- matrix (NA, nc = 3, nr=15)
-  for (npro in 1:15) {
+  ret <<- matrix (NA, nc = 3, nr=length(profnames))
+  for (npro in 1:length(profnames)) {
     profpt <- 0
     for (pt in 2:17) {
       profpt <- profpt + (as.numeric(producao[npro,pt]) * tabpesos[(pt-1)])

@@ -7,9 +7,19 @@
 ###      Marcelo Hounsell
 ###      Maurício Pillon
 
+### CCAA2021: Comissão de Credenciamento/Des/Re Acompanhamento e Autoavaliação 
+### Coordenação PPGCA:
+###      Charles Christian Miers
+### Comissão:
+###      Avanilde Kemczinski
+###      Adriano Fiorese
+###      Isabela Gasparini
+###      Maurício Pillon
+
+
 ########################################
 # Definições:
-### período de 4 anos: 2017-2020 (até 31/12/2020)
+### período de 4 anos: 2018-2021 (até 31/12/2021)
 ### Periódico tem bonus de 25%
 ### Ordem de prioridade para coleta das melhores produções:
    ### P.A1, E.A1, P.A2, E.A2, P.B1, E.B1 ...
@@ -30,20 +40,27 @@ library(plotrix)
 library(RColorBrewer)
 source ("mcalibQ16.R")
 
-planilha <- "jcr/Produção Individual 2020-teste.xlsx"
-#planilha <- "../PD_21_09_2020.xlsx"
+#planilha <- "jcr/Produção Individual 2020-teste.xlsx"
+planilha <- "jcr/PPGCAP-ProducaoDocente_teste-2021.xlsx"
 
 mysheets <- excel_sheets(planilha)
-p2020 <- read_excel(planilha, sheet="2020")
-p2017 <- read_excel(planilha, sheet="2017")
-p2018 <- read_excel(planilha, sheet="2018")
-p2019 <- read_excel(planilha, sheet="2019")
+p20_4 <- read_excel(planilha, sheet="2021")
+p20_3 <- read_excel(planilha, sheet="2020")
+p20_2 <- read_excel(planilha, sheet="2019")
+p20_1 <- read_excel(planilha, sheet="2018")
+
 
 #remover submenu, A3, A4 (periodico e eventos), valores Qualis 2020
-p2017 <- p2017[c(-1, -4, -5, -14, -15),seq (4, 34, 2)*-(1)]
-p2018 <- p2018[c(-1, -4, -5, -14, -15),seq (4, 34, 2)*-(1)]
-p2019 <- p2019[c(-1, -4, -5, -14, -15),seq (4, 34, 2)*-(1)]
-p2020 <- p2020[c(-1, -4, -5, -14, -15),seq (4, 34, 2)*-(1)]
+p20_1 <- p20_1[c(-1, -4, -5, -14, -15),seq (4, 34, 2)*-(1)]
+p20_2 <- p20_2[c(-1, -4, -5, -14, -15),seq (4, 34, 2)*-(1)]
+p20_3 <- p20_3[c(-1, -4, -5, -14, -15),seq (4, 34, 2)*-(1)]
+p20_4 <- p20_4[c(-1, -4, -5, -14, -15),seq (4, 34, 2)*-(1)]
+
+# remover colunas prof (9) ocultas na planilha de origem
+p20_1 <- p20_1[-9]
+p20_2 <- p20_2[-9]
+p20_3 <- p20_3[-9]
+p20_4 <- p20_4[-9]
 
 # remover "A3 e A4" 
 
@@ -57,22 +74,22 @@ tabpesos <- c  ( 125,  106.25,  87.5,  62.5,  25,  12.5,   6.25,   0,
 vpriori <- c (1,9,2,10,3,11,4,12,5,13,6,14,7,15,8,16)
 
 # profnames <- c ("Adriano", "André", "Avanilde", "Carla",
-#                 "Charles", "Cristiano", "Fabiano", "Guilherme",
+#                 "Charles", "Fabiano", "Guilherme",
 #                 "Isabela", "Janine", "Marcelo", "Maurício", "Parpinelli",
 #                 "Obelheiro", "Rosso")
 
 pd2016_2019 <- c (1682.5, 450, 443.75, 403.75, 
-                  1702.5, 210, 395, 2168.75,
+                  1702.5, 395, 2168.75,
                   2696.25, 580, 2097.5, 1697.5, 1730,
                   550, 352.5)
 
 # profnames <- c ("A", "C", "B", "V",
-#                 "W", "I", "F", "K",
+#                 "W", "I", "F", 
 #                 "M", "Q", "V", "X", "D",
 #                 "H", "P")
 
 
-profnames <- c ("Antonio", "Beatriz", "Caroline", "Danubia",
+profnames <- c ("Antonio", "Caroline", "Danubia",
                 "Edicleuza", "Fábio", "Gabriel", "Henrique",
                 "Isolde", "Joaquim", "Larissa", "Norma", "Marta",
                 "Oswaldo", "Pedro")
@@ -81,8 +98,8 @@ cor <- c(brewer.pal(n = 10, name = "Set3"),brewer.pal(n = length(profnames)-10, 
 
 ######## Main Procedure #####
 
-topprod <- matrix (NA, nc = 18, nr=15)
-allprod <- matrix (NA, nc = 18, nr=15)
+topprod <- matrix (NA, nc = 18, nr=length(profnames))
+allprod <- matrix (NA, nc = 18, nr=length(profnames))
 colnames(topprod) <- unlist (c("Prof",
                                "A1","A2","B1","B2","B3","B4","B5","NC",
                                "A1","A2","B1","B2","B3","B4","B5","NC","Cor"))
@@ -92,26 +109,33 @@ colnames(allprod) <- unlist (c("Prof",
 
 
 # tprof (Adriano[4], André[5] ... )
-for (tprof in 4:18) {
+for (tprof in 4:(length(profnames)+3)) {
   # qualquer periódico 1:8
-  # nrper <- sum (p2020[1:8,tprof],p2017[1:8,tprof],p2018[1:8,tprof],p2019[1:8,tprof])
+  # nrper <- sum (p20_4[1:8,tprof],p20_1[1:8,tprof],p20_2[1:8,tprof],p20_3[1:8,tprof])
   # somente periódico restrito 1:3 (A1, A2, B1)
-  print (profnames[tprof-3])
-  nrper <- sum (as.numeric(unlist(p2017[1:3,tprof])),
-                as.numeric(unlist(p2018[1:3,tprof])),
-                as.numeric(unlist(p2019[1:3,tprof])),
-                as.numeric(unlist(p2020[1:3,tprof])))
+  #print ("TPROF")
+  #print (tprof)
+  #print (profnames[tprof-3])
+  nrper <- sum (as.numeric(unlist(p20_1[1:3,tprof])),
+                as.numeric(unlist(p20_2[1:3,tprof])),
+                as.numeric(unlist(p20_3[1:3,tprof])),
+                as.numeric(unlist(p20_4[1:3,tprof])))
+  #print (nrper)
   nevt <- as.numeric (nrper * 3)
   sop <<- data.frame(
-    p2017[1:16,tprof],
-    p2018[1:16,tprof],
-    p2019[1:16,tprof],
-    p2020[1:16,tprof])
+    p20_1[1:16,tprof],
+    p20_2[1:16,tprof],
+    p20_3[1:16,tprof],
+    p20_4[1:16,tprof])
+  #print (sop)
   # Eventos E.A1, E.A2, E.B1, E.B2, E.B3, E.B4, E.B5, E.NC
   eventos <- c (9,10,11,12,13,14,15,16)
+  #print (nevt)
   top(nevt,sop,(tprof - 3),eventos)
+  #print ("DEB 4")
   # soperiodico(sop,(tprof - 3))
 }
+print("DEB 5")
 pub3par1 <- topprod
 # apagar periódico B2-NC
 pub3par1[,5:9] <- 0
@@ -142,24 +166,24 @@ bp <- barplot2(as.numeric(vtall[order(as.numeric(vtall[,2])),2]),
                beside = TRUE, horiz = FALSE,
                col = vtall[order(as.numeric(vtall[,2])),3],
                #col = cor,
-               main = c("Pontuação Produção Completa 2017-2020")#,
+               main = c("Pontuação Produção Completa 2018-2021")#,
                #ylim = c(0, 2000)
 )
 text(bp-0.5,-75, vtall[order(as.numeric(vtall[,2])),1],cex=1,pos=1, xpd=TRUE, srt=45)
 text(2,-250, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.15,50+(as.numeric(vtall[order(as.numeric(vtall[,2])),2])/2),
      vtall[order(as.numeric(vtall[,2])),2],cex=1.4,pos=1, xpd=TRUE, srt=90)
-text(bp-0.15,200+(as.numeric(vtall[order(as.numeric(vtall[,2])),2])),
-     sprintf ("%.f%%*", nvtall[order(as.numeric(vtall[,2])),5]),cex=1,pos=1, xpd=TRUE, srt=40)
-text(14,-260, c("* Valores % correspondentes a variação em relação ao período (2016-2019).") ,cex=0.8,pos=1, xpd=TRUE)
-text(9,-340, sprintf ("A produção 2017-2020 do PPGCA teve %.f%% em relação ao período (2016-2019).", (100-sum(as.numeric(vtall[,2]))*100/sum(pd2016_2019))*(-1)) ,cex=0.8,pos=1, xpd=TRUE)
+#text(bp-0.15,200+(as.numeric(vtall[order(as.numeric(vtall[,2])),2])),
+#     sprintf ("%.f%%*", nvtall[order(as.numeric(vtall[,2])),5]),cex=1,pos=1, xpd=TRUE, srt=40)
+#text(14,-260, c("* Valores % correspondentes a variação em relação ao período (2016-2019).") ,cex=0.8,pos=1, xpd=TRUE)
+#text(9,-340, sprintf ("A produção 2018-2021 do PPGCA teve %.f%% em relação ao período (2016-2019).", (100-sum(as.numeric(vtall[,2]))*100/sum(pd2016_2019))*(-1)) ,cex=0.8,pos=1, xpd=TRUE)
 
 #abline(h=120, col = "blue")
 
 
 ##############
 contabiliza(topcapes)
-vcapes <- matrix (NA, nc = 3, nr=15)
+vcapes <- matrix (NA, nc = 3, nr=length(profnames))
 vcapes[,1] <- profnames
 vcapes[,2] <- ret[,2]
 vcapes[,3] <- cor
@@ -168,7 +192,7 @@ ttcapes <- vcapes[order(as.numeric(vcapes[,2])),]
 bp <- barplot2(as.numeric(ttcapes[order(as.numeric(ttcapes[,2])),2]),
                beside = TRUE, horiz = FALSE,
                col = ttcapes[order(as.numeric(ttcapes[,2])),3],
-               main = c("TopCapes 2017-2020")#,
+               main = c("TopCapes 2018-2021")#,
                #ylim = c(0, 2000)
 )
 text(bp-0.5,-15, ttcapes[order(as.numeric(ttcapes[,2])),1],cex=1,pos=1, xpd=TRUE, srt=45)
@@ -188,7 +212,7 @@ bp <- barplot2(as.numeric(vtprofpt5[order(as.numeric(vtprofpt5[,2])),2]),
                #names.arg = rep ("Prof",15),
                #ylab = "#Publicações",
                col = vtprofpt5[order(as.numeric(vtprofpt5[,2])),3],
-               main = c("Pontuação Top5 2017-2020") #,ylim = c(0, 500)
+               main = c("Pontuação Top5 2018-2021") #,ylim = c(0, 500)
 )
 
 text(2,-50, planilha,cex=1,pos=1, xpd=TRUE)
@@ -206,7 +230,7 @@ bp <- barplot2(as.numeric(vtprofpt10[order(as.numeric(vtprofpt10[,2])),2]),
                #ylab = "#Publicações",
                #xlab = "Produção de cada professor do PPGCA",
                col = vtprofpt10[order(as.numeric(vtprofpt10[,2])),3],
-               main = c("Pontuação Top10 2017-2020")#, ylim = c(0, 900)
+               main = c("Pontuação Top10 2018-2021")#, ylim = c(0, 900)
 )
 text(2,-90, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.5,-30, vtprofpt10[order(as.numeric(vtprofpt10[,2])),1],cex=1,pos=1, xpd=TRUE, srt=45)
@@ -224,7 +248,7 @@ bp <- barplot2(as.numeric(vtpub3par1[order(as.numeric(vtpub3par1[,2])),2]),
                #ylab = "#Publicações",
                #xlab = "Produção de cada professor do PPGCA",
                col = vtpub3par1[order(as.numeric(vtpub3par1[,2])),3],
-               main = c("Pontuação Pq1xPer. 3xEvt 2017-2020") #,ylim = c(0, 1700)
+               main = c("Pontuação Pq1xPer. 3xEvt 2018-2021") #,ylim = c(0, 1700)
 )
 
 text(2,-200, planilha,cex=1,pos=1, xpd=TRUE)
@@ -234,39 +258,39 @@ text(bp-0.15,50+(as.numeric(vtpub3par1[order(as.numeric(vtpub3par1[,2])),2])/2),
 #abline(h=120, col = "blue")
 
 mediaProd <- c()
-fmedias(15, vcapes)
+fmedias(length(profnames), vcapes)
 print (mediaProd)
 mediasCapes <- mediaProd
 
 mediaProd <- c()
-fmedias(15, vtprofpt5)
+fmedias(length(profnames), vtprofpt5)
 print (mediaProd)
 mediasTop5 <- mediaProd
 
 mediaProd <- c()
-fmedias(15, vtprofpt10)
+fmedias(length(profnames), vtprofpt10)
 print (mediaProd)
 mediasTop10 <- mediaProd
 
 mediaProd <- c()
-fmedias(15, vtpub3par1)
+fmedias(length(profnames), vtpub3par1)
 print (mediaProd)
 mediasTopPq1x3 <- mediaProd
 
 medianaProd <- c()
-fmedianas(15, vcapes)
+fmedianas(length(profnames), vcapes)
 medianasCapes <- medianaProd
 
 medianaProd <- c()
-fmedianas(15, vtprofpt5)
+fmedianas(length(profnames), vtprofpt5)
 medianasTop5 <- medianaProd
 
 medianaProd <- c()
-fmedianas(15, vtprofpt10)
+fmedianas(length(profnames), vtprofpt10)
 medianasTop10 <- medianaProd
 
 medianaProd <- c()
-fmedianas(15, vtpub3par1)
+fmedianas(length(profnames), vtpub3par1)
 medianasTopPq1x3 <- medianaProd
 
 plotchar = c (17, 18, 19, 20)
@@ -314,7 +338,7 @@ boxplot(
         boxCapes[11:15],boxCapes[12:15],boxCapes[13:15],boxCapes[14:15],boxCapes[15:15], 
         col=cor, ylim = c(0,max(boxCapes)),
         xlab = "Número de permanentes reclassificados (p/ colaborador + desligado)")
-title("TopCapes 2017-2020")
+title("TopCapes 2018-2021")
 grid (NA,10,col = "black")
 axis(1, at=sort (c(rep(1:16))),labels=c(rep(0:15)), las=1)
 text(2,-50, planilha,cex=1,pos=1, xpd=TRUE)
@@ -327,7 +351,7 @@ boxplot(
         box5[11:15],box5[12:15],box5[13:15],box5[14:15],box5[15:15], 
         col=cor, ylim = c(0,max(box5)),
         xlab = "Número de permanentes reclassificados (p/ colaborador + desligado)")
-title("Top5 2017-2020")
+title("Top5 2018-2021")
 grid (NA,10,col = "black")
 axis(1, at=sort (c(rep(1:16))),labels=c(rep(0:15)), las=1)
 text(2,-60, planilha,cex=1,pos=1, xpd=TRUE)
@@ -340,7 +364,7 @@ boxplot(
         box10[11:15],box10[12:15],box10[13:15],box10[14:15],box10[15:15], 
         col=cor,ylim = c(0,max(box10)),
         xlab = "Número de permanentes reclassificados (p/ colaborador + desligado)")
-title("Top10 2017-2020")
+title("Top10 2018-2021")
 grid (NA,10,col = "black")
 axis(1, at=sort (c(rep(1:16))),labels=c(rep(0:15)), las=1)
 text(2,-100, planilha,cex=1,pos=1, xpd=TRUE)
@@ -354,9 +378,10 @@ boxplot(
         col=cor, ylim = c(0,max(boxPq)),
         xlab = "Número de permanentes reclassificados (p/ colaborador + desligado)")
 grid (NA,10,col = "black")
-title("TopPq13E 2017-2020")
+title("TopPq13E 2018-2021")
 axis(1, at=sort (c(rep(1:16))),labels=c(rep(0:15)), las=1)
 text(2,-220, planilha,cex=1,pos=1, xpd=TRUE)
 
 
 dev.off()
+
