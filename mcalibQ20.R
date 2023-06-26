@@ -65,7 +65,7 @@ top <- function (topnro, prod, nprof, prioridade) {
           temp <- ctprod - topnro
           #print (sprintf("%s ind(%d) %d %d", profSum[tii], (topnro - 1), ctprod, temp))
           profSum[tii] <- as.numeric(profSum[tii]) - temp
-          print (sprintf("%s %s (%s)", profnames [nprof], p2017$Qualis[tii], profSum[tii]))
+          print (sprintf("%s %s (%s)", profnames [nprof], pAno1$Qualis[tii], profSum[tii]))
         }
       }
     }
@@ -85,23 +85,23 @@ top <- function (topnro, prod, nprof, prioridade) {
 }
 
 topcapes <- function () {
-  for (tprof in 4:18) {
-    trienio <<- data.frame(p2020[1:18,tprof])
+  for (tprof in 4:(length(profnames)+3)) {
+    trienio <<- data.frame(pAno1[1:18,tprof])
     top(1,trienio,(tprof - 3),vpriori)
   }
   tmpcapes1 <- topprod
-  for (tprof in 4:18) {
-    trienio <<- data.frame(p2017[1:18,tprof])
+  for (tprof in 4:(length(profnames)+3)) {
+    trienio <<- data.frame(pAno2[1:18,tprof])
     top(1,trienio,(tprof - 3),vpriori)
   }
   tmpcapes2 <- topprod
-  for (tprof in 4:18) {
-    trienio <<- data.frame(p2018[1:18,tprof])
+  for (tprof in 4:(length(profnames)+3)) {
+    trienio <<- data.frame(pAno3[1:18,tprof])
     top(1,trienio,(tprof - 3),vpriori)
   }
   tmpcapes3 <- topprod
-  for (tprof in 4:18) {
-    trienio <<- data.frame(p2019[1:18,tprof])
+  for (tprof in 4:(length(profnames)+3)) {
+    trienio <<- data.frame(pAno4[1:18,tprof])
     top(1,trienio,(tprof - 3),vpriori)
   }
   tmpcapes4 <- topprod
@@ -122,18 +122,18 @@ topcapes <- function () {
 
 
 extrairtop <- function (topnro) {
-  for (tprof in 4:18) {
-    trienio <<- data.frame(p2017[1:18,tprof],
-                           p2018[1:18,tprof],
-                           p2019[1:18,tprof],
-                           p2020[1:18,tprof])
+  for (tprof in 4:(length(profnames)+3)) {
+    trienio <<- data.frame(pAno1[1:18,tprof],
+                           pAno2[1:18,tprof],
+                           pAno3[1:18,tprof],
+                           pAno4[1:18,tprof])
     top(topnro,trienio,(tprof - 3),vpriori)
   }
 }
 
 contabiliza <- function (producao) {
-  ret <<- matrix (NA, nc = 3, nr=15)
-  for (npro in 1:15) {
+  ret <<- matrix (NA, nc = 3, nr=length(profnames))
+  for (npro in 1:length(profnames)) {
     profpt <- 0
     for (pt in 2:19) {
       profpt <- profpt + (as.numeric(producao[npro,pt]) * tabpesos[(pt-1)])
