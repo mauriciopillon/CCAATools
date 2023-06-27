@@ -1,3 +1,19 @@
+### CCAA2023: Comissão de Credenciamento/Des/Re Acompanhamento e Autoavaliação 
+### Coordenação PPGCA:
+###      Charles Christian Miers
+### Comissão:
+###      Avanilde Kemczinski
+###      Adriano Fiorese
+###      Isabela Gasparini
+###      Maurício Pillon
+###
+### Alterações 2023:
+###    - Abandono do Qualis 2016 (ferramenta prof-prodQ16.R)
+###    - Adequações da ferramenta prof-prodQ20.R, prof-prodQ20v2.R e mcalibQ20.R
+###    - Identificação automática do número de professores;
+###    - Adequação ao formato da nova planilha de entrada PPGCAP-ProducaoDocente_teste-2023.xlsx
+
+
 ### CCAA2021: Comissão de Credenciamento/Des/Re Acompanhamento e Autoavaliação 
 ### Coordenação PPGCA:
 ###      Charles Christian Miers
