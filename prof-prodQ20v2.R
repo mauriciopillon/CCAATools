@@ -30,8 +30,8 @@ library(RColorBrewer)
 source ("mcalibQ20.R")
 
 #planilha <- "jcr/Produção Individual 2020-teste.xlsx"
-planilha <- "jcr/PPGCAP-ProducaoDocente_v2022_Atualizada_2021_a_2024_Qualis2020_v1.xlsx"
-ano1<-2021
+planilha <- "jcr/PPGCAP-ProducaoDocente_v2023_Atualizada_2019_2020_2021_2022_Qualis2020_2023_dinamico_v2xlsx.xlsx"
+ano1<-2020
 periodo_avaliacao=sprintf("%s-%s",ano1,(ano1+3))
 
 mysheets <- excel_sheets(planilha)
@@ -60,8 +60,8 @@ vtposicao <- c ("P.A1","P.A2","P.A3","P.A4","P.B1","P.B2","P.B3","P.B4","P.NC",
                 "E.A1","E.A2","E.A3","E.A4","E.B1","E.B2","E.B3","E.B4","E.NC")
 
 #                 1,    2,   3,   4,   5,   6,   7,    8, 9, 
-tabpesos <- c  ( 100,	87.5,	75,	62.5,	50,	37.5,	25,	12.5,	0,
-                 100,	87.5,	75,	62.5,	50,	37.5,	25,	12.5,	0)
+tabpesos <- c  ( 125,	109.4,	94,	80,	63,	25,	12.5,	6.25,	0,
+                 100,	87.5,	75,	62.5,	50,	20,	10,	5,	0)
 
 # P.A1, E.A1, P.A2, E.A2, P.A3, E.A3, P.A4, E.A4, P.B1, E.B1, P.B2, E.B2, P.B3, E.B3, P.B4, E.B4, P.NC, E.NC
 vpriori <- c (1,10, 2,11, 3,12, 4,13, 5,14, 6,15, 7,16, 8,17, 9,18)
@@ -153,7 +153,7 @@ text(bp-0.5,-75, vtall[order(as.numeric(vtall[,2])),1],cex=1,pos=1, xpd=TRUE, sr
 text(2,-250, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.15,50+(as.numeric(vtall[order(as.numeric(vtall[,2])),2])/2),
      vtall[order(as.numeric(vtall[,2])),2],cex=1.4,pos=1, xpd=TRUE, srt=90)
-abline(h=120, col = "blue")
+abline(h=450, col = "blue")
 
 
 ##############
@@ -174,7 +174,7 @@ text(bp-0.5,-15, ttcapes[order(as.numeric(ttcapes[,2])),1],cex=1,pos=1, xpd=TRUE
 text(2,-50, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.15,50+(as.numeric(ttcapes[order(as.numeric(ttcapes[,2])),2])/2), 
       ttcapes[order(as.numeric(ttcapes[,2])),2],cex=1.4,pos=1, xpd=TRUE, srt=90)
-abline(h=120, col = "blue")
+abline(h=450, col = "blue")
 
 
 ##############
@@ -194,7 +194,7 @@ text(2,-50, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.5,-15, vtprofpt5[order(as.numeric(vtprofpt5[,2])),1],cex=1,pos=1, xpd=TRUE, srt=45)
 text(bp-0.15,50+(as.numeric(vtprofpt5[order(as.numeric(vtprofpt5[,2])),2])/2), 
      vtprofpt5[order(as.numeric(vtprofpt5[,2])),2],cex=1.4,pos=1, xpd=TRUE, srt=90)
-abline(h=120, col = "blue")
+abline(h=450, col = "blue")
 
 ##############
 contabiliza(top10)
@@ -211,7 +211,7 @@ text(2,-90, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.5,-30, vtprofpt10[order(as.numeric(vtprofpt10[,2])),1],cex=1,pos=1, xpd=TRUE, srt=45)
 text(bp-0.15,50+(as.numeric(vtprofpt10[order(as.numeric(vtprofpt10[,2])),2])/2), 
      vtprofpt10[order(as.numeric(vtprofpt10[,2])),2],cex=1.4,pos=1, xpd=TRUE, srt=90)
-abline(h=120, col = "blue")
+abline(h=450, col = "blue")
 
 ##############
 
@@ -230,7 +230,7 @@ text(2,-200, planilha,cex=1,pos=1, xpd=TRUE)
 text(bp-0.5,-60, vtpub3par1[order(as.numeric(vtpub3par1[,2])),1],cex=1,pos=1, xpd=TRUE, srt=45)
 text(bp-0.15,50+(as.numeric(vtpub3par1[order(as.numeric(vtpub3par1[,2])),2])/2), 
      vtpub3par1[order(as.numeric(vtpub3par1[,2])),2],cex=1.4,pos=1, xpd=TRUE, srt=90)
-abline(h=120, col = "blue")
+abline(h=450, col = "blue")
 
 mediaProd <- c()
 fmedias(length(profnames), vcapes)
